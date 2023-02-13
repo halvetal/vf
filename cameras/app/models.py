@@ -2,11 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class Admin(AbstractUser):
+class Admin(models.Model):
+    name = models.CharField(max_length=40)
     access = models.BooleanField()
 
 
-class Operator(AbstractUser):
+class Operator(models.Model):
+    name = models.CharField(max_length=40)
     access = models.BooleanField()
 
 
