@@ -13,3 +13,19 @@ class Camera(models.Model):
     port_onvife = models.TextField(max_length=16)
     username = models.TextField(max_length=100)
     password = models.TextField(max_length=1000)
+
+
+
+# РЛС
+
+# AIS
+
+# SOUND
+
+# UV
+
+# MEDIA_SEVER
+
+
+
+
