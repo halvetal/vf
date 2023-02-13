@@ -6,13 +6,6 @@ class CameraSerializer(serializers.ModelSerializer):
         model = Camera
         fields = '__all__'
 
-
-class AdminSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Admin
-        fields = '__all__'
-
-
 class OperatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Operator

@@ -51,6 +51,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTH_USER_MODEL = 'app.Operator'
+
 ROOT_URLCONF = 'cameras.urls'
 
 TEMPLATES = [
