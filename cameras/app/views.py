@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .serializers import *
 # Create your views here.
@@ -10,6 +11,9 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 MEDIASERVER_IP = os.getenv("MEDIASERVER_IP")
+
+
+@login_required
 class CameraFocusPlus(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -30,6 +34,7 @@ class CameraFocusPlus(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraFocusMinus(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -50,6 +55,7 @@ class CameraFocusMinus(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraFocusStop(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -69,6 +75,8 @@ class CameraFocusStop(APIView):
                 if i['username'] == username and i['password'] == password:
                     requests.post(MEDIASERVER_IP, data=data)
 
+
+@login_required
 class CameraZoomUp(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -89,6 +97,7 @@ class CameraZoomUp(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraZoomDown(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -109,6 +118,7 @@ class CameraZoomDown(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraRight(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -129,6 +139,7 @@ class CameraRight(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraLeft(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -148,6 +159,8 @@ class CameraLeft(APIView):
                 if i['username'] == username and i['password'] == password:
                     requests.post(MEDIASERVER_IP, data=data)
 
+
+@login_required
 class CameraUp(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -168,6 +181,7 @@ class CameraUp(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraDown(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -188,6 +202,7 @@ class CameraDown(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraStop(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -208,6 +223,7 @@ class CameraStop(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraSetPreset(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -228,6 +244,7 @@ class CameraSetPreset(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraSelectPreset(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -248,6 +265,7 @@ class CameraSelectPreset(APIView):
                     requests.post(MEDIASERVER_IP, data=data)
 
 
+@login_required
 class CameraGetPresets(APIView):
     def post(self, request):
         ip=request.data['ip']
