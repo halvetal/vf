@@ -5,7 +5,11 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import requests
-
+import json
+from dotenv import load_dotenv
+import os
+load_dotenv()
+MEDIASERVER_IP = os.getenv("MEDIASERVER_IP")
 class CameraFocusPlus(APIView):
     def post(self, request):
         ip=request.data['ip']
@@ -13,10 +17,17 @@ class CameraFocusPlus(APIView):
         username=request.data['username']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "focus_plus"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/focus_plus/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraFocusMinus(APIView):
@@ -26,10 +37,17 @@ class CameraFocusMinus(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "focus_minus"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/focus_minus/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraFocusStop(APIView):
@@ -39,11 +57,17 @@ class CameraFocusStop(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "focus_stop"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/focus_stop/", data={})
-
+                    requests.post(MEDIASERVER_IP, data=data)
 
 class CameraZoomUp(APIView):
     def post(self, request):
@@ -52,10 +76,17 @@ class CameraZoomUp(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "zoom_up"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/zoom_up/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraZoomDown(APIView):
@@ -65,10 +96,17 @@ class CameraZoomDown(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "zoom_down"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/zoom_down/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraRight(APIView):
@@ -78,10 +116,17 @@ class CameraRight(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "right"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/right/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraLeft(APIView):
@@ -91,10 +136,17 @@ class CameraLeft(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "left"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/left/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 class CameraUp(APIView):
     def post(self, request):
@@ -103,10 +155,17 @@ class CameraUp(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "up"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/up/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraDown(APIView):
@@ -116,10 +175,17 @@ class CameraDown(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "down"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/down/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraStop(APIView):
@@ -129,10 +195,17 @@ class CameraStop(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "stop"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/stop/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraSetPreset(APIView):
@@ -142,10 +215,17 @@ class CameraSetPreset(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "set_preset"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/set_preset/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraSelectPreset(APIView):
@@ -155,10 +235,17 @@ class CameraSelectPreset(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "select_preset"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/select_preset/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
 
 
 class CameraGetPresets(APIView):
@@ -168,7 +255,14 @@ class CameraGetPresets(APIView):
         username=request.data['usernam']
         password=request.data['password']
         lst = list(Camera.objects.all().values())
+        data = {
+            "ip": ip,
+            "port_onvife": port_onvife,
+            "user": username,
+            "paassword": password,
+            "type": "get_presets"
+        }
         for i in lst:
             if i['ip'] == ip:
                 if i['username'] == username and i['password'] == password:
-                    requests.post("http://127.0.0.1:5000/get_presets/", data={})
+                    requests.post(MEDIASERVER_IP, data=data)
