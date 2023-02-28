@@ -22,30 +22,28 @@ class Camera(APIView):
         for i in lst:
             if i['id'] == id:
                 data = {
-                    "id": id,
                     "ip": i['ip'],
                     "port_onvife": i['port_onvife'],
                     "username": i['username'],
                     "paassword": i['password'],
-                    "type": type
                 }
-                requests.post(MEDIASERVER_IP, data=data)
+                requests.post(f"""{MEDIASERVER_IP}/{type}""", data=data)
 
 class CamerasPost(APIView):
     def get(self, request):
         lst = Camera.objects.all().values()
         return Response({'cameras': list(lst)})
 
-#
-# @login_required
-# class CameraFocusPlus(APIView):
-#     def post(self, request):
-#         ip=request.data['ip']
-#         port_onvife=request.data['port_onvife']
-#         username=request.data['username']
-#         password=request.data['password']
-#         lst = list(Camera.objects.all().values())
-#         data = {
+
+ # @login_required
+ # class CameraFocusPlus(APIView):
+ #     def post(self, request):
+ #         ip=request.data['ip']
+ #         port_onvife=request.data['port_onvife']
+ #         username=request.data['username']
+ #         password=request.data['password']
+ #         lst = list(Camera.objects.all().values())
+ #         data = {
 #             "ip": ip,
 #             "port_onvife": port_onvife,
 #             "user": username,
