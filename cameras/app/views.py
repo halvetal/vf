@@ -13,7 +13,7 @@ load_dotenv()
 MEDIASERVER_IP = os.getenv("MEDIASERVER_IP")
 
 
-
+@login_required
 class Camera(APIView):
     def post(self, request):
         id=request.data['ip']
