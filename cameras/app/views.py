@@ -16,8 +16,8 @@ MEDIASERVER_IP = os.getenv("MEDIASERVER_IP")
 @login_required
 class Camera(APIView):
     def post(self, request):
-        id=request.data['ip']
-        type=request.data['password']
+        id=request.data['id']
+        type=request.data['type']
         lst = list(Camera.objects.all().values())
         for i in lst:
             if i['id'] == id:
