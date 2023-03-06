@@ -13,6 +13,11 @@ class Camera(models.Model):
     username = models.TextField(max_length=100)
     password = models.TextField(max_length=1000)
 
+class Precet(models.Model):
+    number = models.IntegerField()
+    id_camera = models.ForeignKey(Camera,on_delete=models.CASCADE)
+    preset = models.TextField(max_length=10000)
+
 
 # class UV_camera(models.Model):
 #     state = models.BooleanField(null=True)

@@ -7,10 +7,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 import requests
 import json
-from dotenv import load_dotenv
-import os
-load_dotenv()
-MEDIASERVER_IP = os.getenv("MEDIASERVER_IP")
+# from dotenv import load_dotenv
+# import os
+# load_dotenv()
+# MEDIASERVER_IP = os.getenv("MEDIASERVER_IP")
+MEDIASERVER_IP = 'http://127.0.0.1:8001'
 
 
 @login_required
