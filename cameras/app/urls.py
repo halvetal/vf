@@ -2,7 +2,11 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('/', Camera.as_view())
+    path('camera/', CameraApi.as_view()),
+    path('set_preset/', PresetSetApi.as_view()),
+path('select_preset/', PresetSelectApi.as_view()),
+path('get_preset/', PresetGetApi.as_view()),
+path('delete_preset/', PresetDeleteApi.as_view())
 #     path('focus_plus/', CameraFocusPlus.as_view()),
 # path('focus_minus/', CameraFocusMinus.as_view()),
 # path('focus_stop/', CameraFocusStop.as_view()),

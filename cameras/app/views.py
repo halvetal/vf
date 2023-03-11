@@ -11,66 +11,220 @@ import json
 # import os
 # load_dotenv()
 # MEDIASERVER_IP = os.getenv("MEDIASERVER_IP")
-MEDIASERVER_IP = 'http://127.0.0.1:8001'
+MEDIASERVER_IP = 'http://82.148.16.205:8001'
 
 
-@login_required
-class Camera(APIView):
+#@login_required
+class CameraApi(APIView):
     def post(self, request):
         id=request.data['id']
         type=request.data['type']
         lst = list(Camera.objects.all().values())
         for i in lst:
-            if i['id'] == id:
+            if str(i['id']) == str(id):
                 data = {
-                    "ip": i['ip'],
-                    "port_onvife": i['port_onvife'],
+                    "cam_ip": i['ip'],
+                    "port": i['port_onvife'],
                     "username": i['username'],
-                    "paassword": i['password'],
+                    "password": i['password'],
                 }
-                requests.post(f"""{MEDIASERVER_IP}/{type}""", data=data)
+                requests.post(f"""{MEDIASERVER_IP}/{type}""", json=data)
+        return Response({'':''})
 
-class CamerasPost(APIView):
-    def get(self, request):
-        lst = Camera.objects.all().values()
-        return Response({'cameras': list(lst)})
+class PresetSetApi(APIView):
+    def post(self,request):
+        id = request.data['id']
+        token = request.data['token']
+        lst = list(Camera.objects.all().values())
+        for i in lst:
+            if str(i['id']) == str(id):
+                data = {
+                        "cam_ip": i['ip'],
+                        "port": i['port_onvife'],
+                        "username": i['username'],
+                        "password": i['password'],
+                        "id": id,
+                        "token": token
+                    }
+                response = requests.post(f"""{MEDIASERVER_IP}/set_preset""", json=data)
+                if response.status_code == 200:
+                    preset_new = Precet.objects.create(
+                        number = token,
+                        id_camera = id,
+                        preset = 'preset'
+                    )
+        return Response({'': ''})
+
+class PresetSelectApi(APIView):
+    def post(self, request):
+        id = request.data['id']
+        token = request.data['token']
+        lst = list(Camera.objects.all().values())
+        for i in lst:
+            if str(i['id']) == str(id):
+                data = {
+                    "cam_ip": i['ip'],
+                    "port": i['port_onvife'],
+                    "username": i['username'],
+                    "password": i['password'],
+                    "token": token
+                }
+                response = requests.post(f"""{MEDIASERVER_IP}/set_preset""", json=data)
+                if response.status_code == 200:
+                    return Response({"select_preset":"ok"})
+        return Response({'': ''})
 
 
- # @login_required
- # class CameraFocusPlus(APIView):
- #     def post(self, request):
- #         ip=request.data['ip']
- #         port_onvife=request.data['port_onvife']
- #         username=request.data['username']
- #         password=request.data['password']
- #         lst = list(Camera.objects.all().values())
- #         data = {
-#             "ip": ip,
-#             "port_onvife": port_onvife,
-#             "user": username,
-#             "paassword": password,
-#             "type": "focus_plus"
-#         }
-#         for i in lst:
-#             if i['ip'] == ip:
-#                 if i['username'] == username and i['password'] == password:
-#                     requests.post(MEDIASERVER_IP, data=data)
-#
-#
-# @login_required
-# class CameraFocusMinus(APIView):
+
+class PresetGetApi(APIView):
+    def post(self,request):
+        id = request.data['id']
+        lst = list(Camera.objects.all().values())
+        for i in lst:
+            if str(i['id']) == str(id):
+                data = {
+                    "cam_ip": i['ip'],
+                    "port": i['port_onvife'],
+                    "username": i['username'],
+                    "password": i['password'],
+                    "id": id
+                }
+                response = requests.post(f"""{MEDIASERVER_IP}/get_preset""", json=data)
+                if response.status_code == 200:
+                    presets = list(Precet.objects.all().values())
+                    all_presets = []
+                    for y in presets:
+                        if str(y['id_camera']) == str(id):
+                            all_presets.append(y)
+                            return Response({"presets": all_presets})
+        return Response({'presets': 'kakaya-to oshibka'})
+
+
+class PresetDeleteApi(APIView):
+    def post(self,request):
+        id = request.data['id']
+        token = request.data['token']
+        lst = list(Camera.objects.all().values())
+        for i in lst:
+            if str(i['id']) == str(id):
+                data = {
+                    "cam_ip": i['ip'],
+                    "port": i['port_onvife'],
+                    "username": i['username'],
+                    "password": i['password'],
+                    "id": id,
+                    "token": token
+                }
+                response = requests.post(f"""{MEDIASERVER_IP}/delete_preset""", json=data)
+                if response.status_code == 200:
+                    try:
+                        preset = Precet.objects.get(id=token)
+                        preset.delete()
+                        return Response({"":""})
+                    except:
+                        return Response({"delete_preset":"kakaya-to oshibka"})
+        return Response({'': ''})
+
+
+# class PresetApi(APIView):
 #     def post(self, request):
-#         ip=request.data['ip']
-#         port_onvife=request.data['port_onvife']
-#         username=request.data['usernam']
-#         password=request.data['password']
-#         lst = list(Camera.objects.all().values())
-#         data = {
-#             "ip": ip,
-#             "port_onvife": port_onvife,
-#             "user": username,
-#             "paassword": password,
-#             "type": "focus_minus"
+#         id = request.data['id']
+#         command = request.data['command']
+#         token = request.data['token']
+#         if command == 'set_preset':
+#             lst = list(Camera.objects.all().values())
+#             for i in lst:
+#                 if str(i['id']) == str(id):
+#                     data = {
+#                         "cam_ip": i['ip'],
+#                         "port": i['port_onvife'],
+#                         "username": i['username'],
+#                         "password": i['password'],
+#                         "id": id,
+#                         "token": token
+#                     }
+#                     requests.post(f"""{MEDIASERVER_IP}/set_preset""", json=data)
+#             return Response({'':''})
+#
+#         if command == 'select_preset':
+#             pass
+#         if command == 'get_preset':
+#             lst = list(Camera.objects.all().values())
+#             for i in lst:
+#                 if str(i['id']) == str(id):
+#                     presets = list(Precet.objects.all().values())
+#                     for y in presets:
+#                         if str(y['id_camera']) == str(id):
+#                             data = {
+#                                 "cam_ip": i['ip'],
+#                                 "port": i['port_onvife'],
+#                                 "username": i['username'],
+#                                 "password": i['password'],
+#                                 "id": id
+#                             }
+#                             requests.post(f"""{MEDIASERVER_IP}/get_preset""", json=data)
+#             return Response({'': ''})
+#         if command == 'delete_preset':
+#             lst = list(Camera.objects.all().values())
+#             for i in lst:
+#                 if str(i['id']) == str(id):
+#                     data = {
+#                         "cam_ip": i['ip'],
+#                         "port": i['port_onvife'],
+#                         "username": i['username'],
+#                         "password": i['password'],
+#                         "id": id,
+#                         "token": token
+#                     }
+#                     requests.post(f"""{MEDIASERVER_IP}/delete_preset""", json=data)
+#             return Response({'': ''})
+#         return Response({'': ''})
+#
+#
+#
+#
+#
+# class CamerasPost(APIView):
+#     def get(self, request):
+#         lst = Camera.objects.all().values()
+#         return Response({'cameras': list(lst)})
+#
+#
+#  # @login_required
+#  # class CameraFocusPlus(APIView):
+#  #     def post(self, request):
+#  #         ip=request.data['ip']
+#  #         port_onvife=request.data['port_onvife']
+#  #         username=request.data['username']
+#  #         password=request.data['password']
+#  #         lst = list(Camera.objects.all().values())
+#  #         data = {
+# #             "ip": ip,
+# #             "port_onvife": port_onvife,
+# #             "user": username,
+# #             "paassword": password,
+# #             "type": "focus_plus"
+# #         }
+# #         for i in lst:
+# #             if i['ip'] == ip:
+# #                 if i['username'] == username and i['password'] == password:
+# #                     requests.post(MEDIASERVER_IP, data=data)
+# #
+# #
+# # @login_required
+# # class CameraFocusMinus(APIView):
+# #     def post(self, request):
+# #         ip=request.data['ip']
+# #         port_onvife=request.data['port_onvife']
+# #         username=request.data['usernam']
+# #         password=request.data['password']
+# #         lst = list(Camera.objects.all().values())
+# #         data = {
+# #             "ip": ip,
+# #             "port_onvife": port_onvife,
+# #             "user": username,
+# #             "paassword": password,
+# #             "type": "focus_minus"
 #         }
 #         for i in lst:
 #             if i['ip'] == ip:
